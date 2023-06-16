@@ -1,10 +1,10 @@
 // Desafio 2
 
-const { log } = require('console');
-const { promises: fs } = require('fs');
-const { title } = require('process');
+//const { log } = require('console');
+import fs from "fs";
+//const { title } = require('process');
 
-class ProductManager {
+export class ProductManager {
   constructor(path) {
     this.products = [];
     this.nextId = 1;
@@ -43,7 +43,7 @@ class ProductManager {
       return;
     }
 
-    loadProductsFromDisk
+   
 
     const lastProduct = this.products[this.products.length - 1];
     let nextId = 1;
@@ -130,6 +130,3 @@ const manager = new ProductManager("./productos.json");
   // Eliminar un producto utilizando el método deleteProduct
   await manager.deleteProduct(1);
 })();
-
-
-export class ProductManager{}
