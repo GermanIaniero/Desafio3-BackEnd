@@ -9,7 +9,8 @@ let products = []
 
 
 
-app.get('/products', async function (req, res)  {
+app.get(('/products', async function (req, res)) => {
+   
     try {  
     
         res.json(products)
@@ -26,14 +27,13 @@ app.get('/products', async function (req, res)  {
      }
 
 
-})
+});
 
 
-app.get('/products/:pid', (req, res) => {
+app.get('/products/:pid', async (req, res) => {
     res.json(products)
 
     const id = parseInt(req.params.id)
-    const product = req.body
 
     const productIdx = products.findIndex(p => p.id === id)
     if(productIdx < 0) {
