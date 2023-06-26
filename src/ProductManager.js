@@ -3,11 +3,10 @@
 //const { log } = require('console');
 import fs from "fs";
 //const { title } = require('process');
+let path= "productos.json"
 
 export class ProductManager {
   constructor(path) {
-    //this.products = [];
-    manager.loadProductsFromDisk() = [];
     this.nextId = 1;
     this.path = path;
     console.log("Productos cargados");
@@ -18,9 +17,8 @@ export class ProductManager {
   //CARGAR LOS PRODUCTOS 
   async loadProductsFromDisk() {
     try {
-      const data = await fs.readFile(this.path);
-      //this.products = JSON.parse(data);
-      manager.loadProductsFromDisk() = JSON.parse(data);
+      const data = await fs.promises.readFile(this.path);
+      return JSON.parse(data);
     } catch (error) {
       return []
     }
@@ -29,26 +27,23 @@ export class ProductManager {
 
   //GUARDAR EN EL DISCO
 
-  async saveProductsToDisk() {
+  async saveProductsToDisk(data) {
     try {
-      //const data = JSON.stringify(this.products);
-      const data = JSON.stringify(manager.saveProductsToDisk());
-      await fs.writeFile(this.path, data);
+      const data = JSON.stringify(data);
+      await fs.promises.writeFile(this.path, data);
     } catch (error) { console.log("No se pudo guardar el archivo de productos"); }
   }
 
 
   //
   async addProduct(product) {
-    if (!title || !product.description || !product.price || !product.thumbnail || !product.code || !product.stock) {
+    if (!product.title || !product.description || !product.price || !product.thumbnail || !product.code || !product.stock) {
       console.error('todos los campos son obligatorios');
       return;
     }
 
+    const lastProduct = this.loadProductsFromDisk() [this.products.length - 1];
    
-
-    //const lastProduct = this.products[this.products.length - 1];
-    const lastProduct = manager.saveProductsToDisk()[manager.saveProductsToDisk().length - 1];
     let nextId = 1;
     if (lastProduct) {
       nextId = lastProduct.id + 1;
@@ -61,7 +56,6 @@ export class ProductManager {
   //
   async getProductById(id) {
     await this.loadProductsFromDisk();
-    //const product = this.products.find(product => product.id === id);
     const product = manager.loadProductsFromDisk().find(product => product.id === id);
     if (product) {
       return product;
@@ -72,13 +66,11 @@ export class ProductManager {
   }
   //
   async getProducts() {
-    await manager.loadProductsFromDisk();
-    //return this.products;
-    return manager.loadProductsFromDisk()
+    await this.loadProductsFromDisk();
+    return this.products;
   }
   //
   isCodeDuplicate(code) {
-    //return this.products.some(product => product.code === code);
     return manager.loadProductsFromDisk().some(product => product.code === code);
   }
   //
@@ -88,7 +80,7 @@ export class ProductManager {
     if (index === -1) {
       return;
     }
-    //this.products.splice(index, 1);
+
     manager.saveProductsToDisk().splice(index, 1);
     await this.saveProductsToDisk();
     console.log(`Producto con ID ${id} a sido eliminado`);
@@ -109,7 +101,7 @@ export class ProductManager {
 }
 
 
-
+/*
 
 //declaro una funcion asincronica
 const main = async () => {
@@ -141,16 +133,9 @@ const main = async () => {
 
   await manager.deleteProduct(1);
 
-  //ir agregando y sacando métodos e ir revisando que ocurre con los productos
+  
 }
 
-//llamo a la función para que sea ejecutada
+
 main()
-
-
-
-
-/*
-(async function () {
-  await manager.loadProductsFromDisk();
- */
+*/
