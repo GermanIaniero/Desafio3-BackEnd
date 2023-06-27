@@ -1,27 +1,22 @@
 import express from 'express';
 import {ProductManager} from "./ProductManager.js";
 
-const productManager = new ProductManager();
+const productManager = new ProductManager('productos.json');
 const app = express()
 app.use(express.json())
 
-let products = []
-
-
-
-app.get(('/products', async function (req, res)) => {
-   
+app.get('/products', async (req, res) => {
     try {  
-    
-        res.json(products)
-
-        let limit = req.query.limit;
-
-        let products = await Product.findAll().paginate({limit: limit}).exec();
-
-        res.render('index', {
-            products: products
-        });
+         
+        let limite2= req.query.limit;
+        if (limite2) {
+            let products = await productManager.getProducts();
+            let limite3= products.slice (0, limite2)
+            return res.send(limite3);
+        } else {
+            let products = await productManager.getProducts();
+            return res.json(products);   
+        }        
     } catch(error) {
             res.status(500).end(error);
      }
