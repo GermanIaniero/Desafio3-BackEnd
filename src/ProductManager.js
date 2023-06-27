@@ -66,7 +66,7 @@ export class ProductManager {
   }
   //
   async getProducts() {
-    await this.loadProductsFromDisk();
+    this.products= await this.loadProductsFromDisk();
     return this.products;
   }
   //
