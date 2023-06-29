@@ -17,7 +17,7 @@ export class ProductManager {
   //CARGAR LOS PRODUCTOS 
   async loadProductsFromDisk() {
     try {
-      const data = await fs.promises.readFile(this.path);
+      const data = await fs.promises.readFile(this.path, "utf-8");
       return JSON.parse(data);
     } catch (error) {
       return []
@@ -55,15 +55,15 @@ export class ProductManager {
   }
   //
   async getProductById(id) {
-    await this.loadProductsFromDisk();
-    const product = manager.loadProductsFromDisk().find(product => product.id === id);
-    if (product) {
-      return product;
+    const productInFile = await this.loadProductsFromDisk();
+    const productFounded = productInFile.find(product => product.id === id);
+    if (productFounded) {
+        return productFounded;
     } else {
-      console.error('Not found');
-      return null;
+        console.error('Not found');
+        return null;
     }
-  }
+}
   //
   async getProducts() {
     this.products= await this.loadProductsFromDisk();

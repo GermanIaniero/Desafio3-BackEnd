@@ -26,16 +26,18 @@ app.get('/products', async (req, res) => {
 
 
 app.get('/products/:pid', async (req, res) => {
-  /*  res.json(products)
+    const id = parseInt(req.params.pid)
+  
+    /*  res.json(products)
 
-    const id = parseInt(req.params.id)
+    
 
     const productIdx = products.findIndex(p => p.id === id) */
 
     try{
 
-        let id= req.params.id;        
-        let products2 = await productManager.getProductsById(id);
+               
+        let products2 = await productManager.getProductById(id);
            
             return res.send(products2);        
         
